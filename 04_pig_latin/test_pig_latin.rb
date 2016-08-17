@@ -56,4 +56,8 @@ class TestPigLatin < MiniTest::Test
   # Write tests and get them to pass for:
   # * capitalized words are still capitalized (but with a different initial capital letter, of course)
   # * the punctuation of the original phrase is retained
+  def test_capitlized_character
+    s = translate("Quick")
+    assert_equal "Ietqucy", s
+  end
 end
