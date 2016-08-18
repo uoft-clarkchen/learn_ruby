@@ -1,28 +1,44 @@
+#TODO
 def translate(words)
-  str = ''
+  #sample vowel characters
   vowel = ['a','e','i','o','u','y']
-  captialized
+  #final return string rebuild from original string
+  final_str = ''
+  # split sentence into array of words, loop though words
   words.split.each do |word|
-    captialized = true if word[0].capitalize == word[0]
-    if vowel.include?(word[0])
-      str =+ word + "ay" +' '
-    else
-      word_copy = ''
-      word.split(//).each do |char|
-        quchecker = word[word_copy.length..word_copy.length+1]
-        if quchecker == 'qu'
-          word_copy += 'qu'
-          break
-        end
-        break if vowel.include?(char)
-        word_copy += char
+    # check if the word is capitalized
+    capitalized = word[0].capitalize == word[0] ? true : false
+    # check if the word has punctuation
+    punctuation = word.match(/\w*/).to_s == word.match(/.*/).to_s ? "" : word[-1]
+    # remove punctuation if word has punctuation
+    word = word[0..-2] if word[-1] == punctuation
+    # uncapitalized the word
+    word[0] = word[0].downcase
+    # holds characters moved to the end of the word
+    appendcharacterholder = ""
+    # check how long is the moved string
+    appendlength = 0
+    word.each_char do |char|
+      appendlength = appendcharacterholder.length
+      # special case move "qu" together
+      if word[appendlength..appendlength + 1] =~ /(qu|Qu|qU)/
+        appendcharacterholder << word[appendlength..appendlength + 1]
+        appendlength = appendcharacterholder.length
+        appendcharacterholder << 'ay'
+        break
+      elsif !vowel.include?(char)
+        appendcharacterholder << char
+      else
+        appendcharacterholder << 'ay'
+        break
       end
-      appendword = word[word_copy.length..-1]
-      appendword.capitalize! if captialized
-      str += appendword + word_copy
-      str += 'ay' if word[-2..-1] != 'ay'
-      str += ' '
     end
+    # concating the words to final returning string
+    first_part = capitalized ? word[appendlength..-1].capitalize : word[appendlength..-1]
+    puts first_part
+    final_str << first_part << appendcharacterholder << punctuation << ' '
   end
-  return str[0..-2]
+
+  # cut last append space
+  return final_str[0..-2]
 end
