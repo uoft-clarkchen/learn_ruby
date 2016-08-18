@@ -124,4 +124,8 @@ class TestTemperature < MiniTest::Test
   # utility class methods
 
   # def test_.....
+  def test_ftoc
+    assert_equal 10, Temperature.ftoc(50)
+    assert_equal 50, Temperature.ctof(10)
+  end
 end

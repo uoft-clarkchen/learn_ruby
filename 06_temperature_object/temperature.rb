@@ -11,12 +11,20 @@ class Temperature
     return Celsius.new(ce)
   end
 
+  def self.ftoc(fa)
+    return (fa - 32) * 5 / 9
+  end
+
+  def self.ctof(ce)
+    return ce * 9 / 5 + 32
+  end
+
   def to_fahrenheit
-    return value = @hsh.keys[0] == :f ? @hsh.values[0] : @hsh.values[0] * 9 / 5 + 32
+    return value = @hsh.keys[0] == :f ? @hsh.values[0] : Temperature.ctof(@hsh.values[0])
   end
 
   def to_celsius
-    return value = @hsh.keys[0] == :c ? @hsh.values[0] : (@hsh.values[0] - 32) * 5 / 9
+    return value = @hsh.keys[0] == :c ? @hsh.values[0] : Temperature.ftoc(@hsh.values[0])
   end
 
 end
